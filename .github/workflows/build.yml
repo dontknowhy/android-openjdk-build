@@ -52,25 +52,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4.1.4
-    - name: Get jre21-aarch32
-      uses: actions/download-artifact@v4.1.7
-      with:
-        name: jre21-aarch32
-        path: pojav
     - name: Get jre21-aarch64
       uses: actions/download-artifact@v4.1.7
       with:
         name: jre21-aarch64
-        path: pojav
-    - name: Get jre21-x86
-      uses: actions/download-artifact@v4.1.7
-      with:
-        name: jre21-x86
-        path: pojav
-    - name: Get jre21-x86_64
-      uses: actions/download-artifact@v4.1.7
-      with:
-        name: jre21-x86_64
         path: pojav
     - name: Repack JRE
       run: bash "repackjre.sh" $GITHUB_WORKSPACE/pojav $GITHUB_WORKSPACE/pojav/jre21-pojav
