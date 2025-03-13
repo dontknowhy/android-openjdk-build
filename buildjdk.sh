@@ -79,7 +79,6 @@ git apply --reject --whitespace=fix ../patches/jdk21u_android.diff || echo "git 
 bash ./configure \
     --with-version-pre="FoldCraftLauncher" \
     --with-vendor-name="dontknowhy" \
-    --with-version-string="-MT8797" \
     --openjdk-target=$TARGET \
     --with-extra-cflags="$CFLAGS" \
     --with-extra-cxxflags="$CFLAGS" \
