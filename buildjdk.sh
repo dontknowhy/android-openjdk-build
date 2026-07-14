@@ -50,19 +50,13 @@ AUTOCONF_EXTRA_ARGS+="OBJCOPY=$OBJCOPY \
   STRIP=$STRIP \
   "
 
-export CFLAGS+=" -Xclang "-target-feature" -Xclang "+v8.2a" -Xclang "-target-feature" -Xclang "+crc" -Xclang "-target-feature" -Xclang "+fp-armv8" -Xclang "-target-feature" -Xclang "+lse" -Xclang "-target-feature" -Xclang "+neon" -Xclang "-target-feature" -Xclang "+ras" -Xclang "-target-feature" -Xclang "+rdm" -Xclang "-target-feature" -Xclang "+fix-cortex-a53-835769" -Xclang "-target-feature" -Xclang "+fp" -Xclang "-target-feature" -Xclang "+simd" -Xclang "-target-abi" -Xclang "aapcs" -mtune=cortex-a78 -mcpu=cortex-a78" # MT8797,由-march=native而来
-
+export CFLAGS+=" -Xclang -target-feature -Xclang +v8.2a -Xclang -target-feature -Xclang +crc -Xclang -target-feature -Xclang +fp-armv8 -Xclang -target-feature -Xclang +lse -Xclang -target-feature -Xclang +neon -Xclang -target-feature -Xclang +ras -Xclang -target-feature -Xclang +rdm -Xclang -target-feature -Xclang +fix-cortex-a53-835769 -Xclang -target-feature -Xclang +fp -Xclang -target-feature -Xclang +simd -Xclang -target-abi -Xclang aapcs -mtune=cortex-a78 -mcpu=cortex-a78" # MT8797 特定优化
 export CFLAGS+=" -DANDROID -D__ANDROID__=1 -pipe -integrated-as -DLE_STANDALONE -Wno-int-conversion -Wno-error=implicit-function-declaration"
-
-export CFLAGS+=" -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-invariant-load-hoisting -mllvm -polly-run-inliner -mllvm -polly-run-dce -mllvm -polly-invariant-load-hoisting -mllvm -polly-run-inliner -mllvm -polly-run-dce -mllvm -polly-parallel -mllvm -polly-scheduling=dynamic -mllvm -polly-omp-backend=LLVM -fopenmp=libomp -mllvm -polly-detect-keep-going -mllvm -polly-ast-use-context" # Polly
-
-export CFLAGS+=" -fvectorize -fslp-vectorize -mllvm -polly-ast-detect-parallel -mllvm -polly-optimized-scops" # Polly extra
-
-export CFLAGS+=" -O3 -flto=thin -fno-emulated-tls -fwhole-program-vtables -fdata-sections -ffunction-sections -fmerge-all-constants -mllvm -hot-cold-split=true -ftree-vectorize -fomit-frame-pointer -fno-semantic-interposition -integrated-as"
-
+export CFLAGS+=" -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-invariant-load-hoisting -mllvm -polly-run-inliner -mllvm -polly-run-dce -mllvm -polly-parallel -mllvm -polly-scheduling=dynamic -mllvm -polly-omp-backend=LLVM -fopenmp=libomp -mllvm -polly-detect-keep-going -mllvm -polly-ast-use-context" # Polly
+export CFLAGS+=" -fvectorize -fslp-vectorize -mllvm -polly-ast-detect-parallel -mllvm -polly-optimized-scops -mllvm -polly-loopfusion-greedy -mllvm=-enable-pipeliner" # Polly 额外 + 新增
+export CFLAGS+=" -O3 -flto=thin -fno-emulated-tls -fwhole-program-vtables -fdata-sections -ffunction-sections -fmerge-all-constants -mllvm -hot-cold-split=true -ftree-vectorize -fomit-frame-pointer -fno-semantic-interposition"
 export CFLAGS+=" -ffast-math -fno-finite-math-only -fno-signed-zeros -fno-trapping-math -fno-math-errno -freciprocal-math -fno-associative-math" # -Ofast
-
-export LDFLAGS+=" -fuse-ld=lld -Wl,-plugin-opt=-emulated-tls=0 -Wl,--strip-all -fvisibility=hidden -Wl,-Bsymbolic -Wl,-O3 -Wl,--sort-common -Wl,--relax -Wl,--gc-sections -Wl,--as-needed -Wl,--lto-O3 -Wl,-plugin-opt=-emulated-tls=0"
+export CFLAGS+=" -Wno-unused-command-line-argument"  # 新增：忽略未使用参数警告
 export LDFLAGS+=" -flto=thin -O3 -fopenmp -l:libomp.a" #我知道你在视奸我，那我问你，这里的-l:libomp.a干啥用的
 export LDFLAGS+=" -L$PWD/dummy_libs" 
 
